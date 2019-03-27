@@ -2,6 +2,13 @@ package com.udacity.sandwichclub.model;
 
 import java.util.List;
 
+/*
+* Thihs is the class that give us a model
+* to be use and call from the other classes.
+* every sandwich shhould have the same fields,
+* with it's unique references.
+*
+* */
 public class Sandwich {
 
     private String mainName;

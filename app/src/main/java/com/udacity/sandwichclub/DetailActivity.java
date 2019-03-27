@@ -11,40 +11,38 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
-
-import org.w3c.dom.Text;
+/*
+* This class create the objects to connect with the
+* activity_detail, to get the functinoality of the program.
+*
+* The object Sandwich is used to populate the sandwich fields
+* in the Detail Activity. populateIU()
+*
+* */
 
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
 
+    private ImageView mIngredientsImageView;
+    private TextView mOriginTextView;
+    private TextView mAlsoKnowAsTextView;
+    private TextView mIngredientsTextView;
+    private TextView mDescriptionTextView;
 
-    private ImageView ingredientsImageView;
-    private TextView originTextView;
-    private TextView alsoKnowAsTextView;
-    private TextView ingredientsTextView;
-    private  TextView descriptionTextView;
-
-    private Sandwich sandwich;
-
-
-
-
-
+    private Sandwich mSandwich;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ImageView ingredientsImageView = findViewById(R.id.image_iv);
-        TextView originTextView = findViewById(R.id.origin_tv);
-        TextView alsoKnowAsTextView = findViewById(R.id.also_known_tv);
-        TextView ingredientsTextView = findViewById(R.id.ingredients_tv);
-        TextView descriptionTextView = findViewById(R.id.description_tv);
-
-
+        mIngredientsImageView = findViewById(R.id.image_iv);
+        mOriginTextView = findViewById(R.id.origin_tv);
+        mAlsoKnowAsTextView = findViewById(R.id.also_known_tv);
+        mIngredientsTextView = findViewById(R.id.ingredients_tv);
+        mDescriptionTextView = findViewById(R.id.description_tv);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -60,15 +58,14 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
-        if (sandwich == null) {
+        mSandwich = JsonUtils.parseSandwichJson(json);
+        if (mSandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
 
         populateUI();
-
     }
 
     private void closeOnError() {
@@ -78,15 +75,13 @@ public class DetailActivity extends AppCompatActivity {
 
     private void populateUI() {
         Picasso.with(this)
-                .load(sandwich.getImage())
-                .into(ingredientsImageView);
+                .load(mSandwich.getImage())
+                .into(mIngredientsImageView);
 
-        setTitle(sandwich.getMainName());
-        originTextView.setText(sandwich.getPlaceOfOrigin());
-        alsoKnowAsTextView.setText(TextUtils.join("," , sandwich.getAlsoKnownAs()));
-        ingredientsTextView.setText(TextUtils.join("," , sandwich.getIngredients()));
-        descriptionTextView.setText(sandwich.getDescription());
-
-
+        setTitle(mSandwich.getMainName());
+        mOriginTextView.setText(mSandwich.getPlaceOfOrigin());
+        mAlsoKnowAsTextView.setText(TextUtils.join(", ", mSandwich.getAlsoKnownAs()));
+        mIngredientsTextView.setText(TextUtils.join(", ", mSandwich.getIngredients()));
+        mDescriptionTextView.setText(mSandwich.getDescription());
     }
 }

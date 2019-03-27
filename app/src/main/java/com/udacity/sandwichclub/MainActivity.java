@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+/*
+* All the program starts here.
+* we create a String Array ti get values from
+* the String xml.
+*
+* */
 public class MainActivity extends AppCompatActivity {
 
     @Override
